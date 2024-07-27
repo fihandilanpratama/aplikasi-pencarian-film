@@ -1,7 +1,7 @@
 $('.search-button').on('click', function() {
    const keyword = $('.search-keyword').val();
    $.ajax({
-      url: 'http://www.omdbapi.com/?apikey=dd388adb&s=' + keyword,
+      url: 'https://www.omdbapi.com/?apikey=dd388adb&s=' + keyword,
       success: result => {
          const movies = result.Search;
          let cards = '';         

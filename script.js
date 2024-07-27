@@ -1,16 +1,19 @@
 $('.search-button').on('click', function() {
-   
+   const keyword = $('.search-keyword').val();
    $.ajax({
-      url: 'http://www.omdbapi.com/?apikey=dd388adb&s=' + $('.search-keyword').val(),
+      url: 'http://www.omdbapi.com/?apikey=dd388adb&s=' + keyword,
       success: result => {
          const movies = result.Search;
-         let cards = '';
-         if( movies == undefined ) alert(`tidak ada hasil untuk "${$('.search-keyword').val()}"!`);
+         let cards = '';         
+         if (keyword == '') {
+            $('.movie-container').html(showAlert({message: 'Harap masukkan keyword pencarian!', type: 'danger'}));
+         } else if (movies == undefined) {
+            $('.movie-container').html(showAlert({message: 'Film tidak ditemukan, periksa kembali keyword pencarian!', type: 'warning'}));
+         }
          movies.forEach(movie => {
             cards += showCard(movie);
          });
          $('.movie-container').html(cards);
-   
    
          // ketika tombol detail diklik
          $('.modal-detail-button').on('click', function() {
@@ -34,6 +37,12 @@ $('.search-button').on('click', function() {
 });
 
 
+function showAlert({message, type}) {
+   return `<div class="alert alert-${type} m-auto" role="alert">
+            ${message}
+         </div>`;
+}
+
 function showCard(movie) {
    return `<div class="col-md-4 my-3">
                <div class="card">
@@ -41,7 +50,7 @@ function showCard(movie) {
                   <div class="card-body">
                   <h5 class="card-title">${movie.Title}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">${movie.Year}</h6>
-                  <a href="#" class="btn btn-primary modal-detail-button" data-toggle="modal" data-target="#movieDetailModal" data-imdbid="${movie.imdbID}">show detail</a>
+                  <a href="#" class="btn btn-success modal-detail-button" data-toggle="modal" data-target="#movieDetailModal" data-imdbid="${movie.imdbID}">show detail</a>
                   </div>
                </div>
             </div>`;

@@ -18,7 +18,7 @@ $('.search-button').on('click', function() {
          // ketika tombol detail diklik
          $('.modal-detail-button').on('click', function() {
             $.ajax({
-               url: 'http://www.omdbapi.com/?apikey=dd388adb&i=' + $(this).data('imdbid'),
+               url: 'https://www.omdbapi.com/?apikey=dd388adb&i=' + $(this).data('imdbid'),
                success: movie => {
                   const movieDetail = showMovieDetail(movie);
                   $('.modal-body').html(movieDetail);
